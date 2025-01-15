@@ -452,7 +452,11 @@ export function QuizSession({ config, topic }: { config: any; topic: string }) {
           <div className="space-y-6">
             <h3 className="text-lg font-medium">{question.question}</h3>
             <RadioGroup
-              value={answers[currentQuestion]?.toString()}
+              value={
+                answers[currentQuestion] !== null
+                  ? answers[currentQuestion].toString()
+                  : ""
+              }
               onValueChange={handleAnswer}
             >
               {question.options.map((option, index) => (
@@ -469,9 +473,11 @@ export function QuizSession({ config, topic }: { config: any; topic: string }) {
             {config.showAnswers && answers[currentQuestion] !== null && (
               <div className="mt-4 p-4 bg-muted rounded-lg">
                 <p className="font-semibold">
-                  {answers[currentQuestion] === question.correctAnswer
-                    ? "Correct!"
-                    : "Incorrect"}
+                  {answers[currentQuestion] === question.correctAnswer ? (
+                    <span className="text-green-500">Correct</span>
+                  ) : (
+                    <span className="text-red-500">Incorrect</span>
+                  )}
                 </p>
                 <p>{question.explanation}</p>
               </div>
