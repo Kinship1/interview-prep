@@ -19,8 +19,8 @@ export function QuizSession({
   quizData: QuizQuestionsData[] | null;
 }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState<(number | null)[]>(
-    Array(parseInt(config.questionCount)).fill(null)
+  const [answers, setAnswers] = useState<(number | string)[]>(
+    Array(parseInt(config.questionCount)).fill("")
   );
   const [showResults, setShowResults] = useState(false);
 
@@ -99,7 +99,7 @@ export function QuizSession({
             <h3 className="text-lg font-medium">{question.question}</h3>
             <RadioGroup
               value={
-                answers[currentQuestion] !== null
+                answers[currentQuestion]
                   ? answers[currentQuestion].toString()
                   : ""
               }
