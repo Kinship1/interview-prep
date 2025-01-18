@@ -10,19 +10,35 @@ import {
 } from "@/components/ui/dialog";
 import { QuizSetup } from "@/components/quiz-setup";
 import { QuizSession } from "@/components/quiz-session";
-import { getTopicIcon } from "@/lib/utils";
+import { getTopicIcon, post } from "@/lib/utils";
+import { QuizConfig, QuizQuestionsData } from "@/lib/types";
 
 export function QuizPageClient({ topic }: { topic: string }) {
   const [showSetup, setShowSetup] = useState(true);
   const [quizStarted, setQuizStarted] = useState(false);
-  const [quizConfig, setQuizConfig] = useState<any>(null);
+  const [quizConfig, setQuizConfig] = useState<QuizConfig | null>(null);
+  const [quizData, setQuizData] = useState<QuizQuestionsData[] | null>(null);
 
   const TopicIcon = getTopicIcon(topic);
 
-  const handleStartQuiz = (config: any) => {
-    setQuizConfig(config);
-    setShowSetup(false);
-    setQuizStarted(true);
+  const handleStartQuiz = async (config: any) => {
+    try {
+      const response = await post("/api/quiz/start", {
+        topic,
+        config,
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch questions");
+      }
+      const { data } = response;
+      setQuizData(data);
+      setQuizConfig(config);
+      setShowSetup(false);
+      setQuizStarted(true);
+    } catch (error) {
+      console.error("Error fetching questions:", error);
+      // Handle error appropriately
+    }
   };
 
   return (
@@ -45,7 +61,7 @@ export function QuizPageClient({ topic }: { topic: string }) {
       </Dialog>
 
       {quizStarted && quizConfig && (
-        <QuizSession config={quizConfig} topic={topic} />
+        <QuizSession config={quizConfig} topic={topic} quizData={quizData} />
       )}
     </main>
   );

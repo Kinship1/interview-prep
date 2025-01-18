@@ -22,3 +22,40 @@ export function getTopicIcon(topic: string): React.ComponentType<any> {
 
   return icons[topic] || Code2;
 }
+
+export const get = async (url: string) => {
+  const res = await fetch(url, {
+    method: "GET",
+  });
+  return res.json();
+};
+
+export const post = async (url: string, body: any) => {
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  return res.json();
+};
+
+export const put = async (url: string, body: any) => {
+  return fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+};
+
+export const deleteMethod = async (url: string) => {
+  return fetch(url, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};

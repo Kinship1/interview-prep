@@ -15,7 +15,9 @@ export async function generateStaticParams() {
   return topics.map((topic) => ({ topic }));
 }
 
-export default async function QuizPage(props: { params: Promise<{ topic: string }> }) {
+export default async function QuizPage(props: {
+  params: Promise<{ topic: string }>;
+}) {
   const params = await props.params;
   return <QuizPageClient topic={params.topic} />;
 }
