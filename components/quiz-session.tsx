@@ -113,7 +113,7 @@ export function QuizSession({
               ))}
             </RadioGroup>
 
-            {config.showAnswers && answers[currentQuestion] !== null && (
+            {config.showAnswers && answers[currentQuestion] !== "" && (
               <div className="mt-4 p-4 bg-muted rounded-lg">
                 <p className="font-semibold">
                   {answers[currentQuestion] === question.correctAnswer[0] ? (
