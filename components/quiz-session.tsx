@@ -130,10 +130,7 @@ export function QuizSession({
       </Card>
 
       <div className="flex justify-end">
-        <Button
-          onClick={handleNext}
-          disabled={answers[currentQuestion] === null}
-        >
+        <Button onClick={handleNext} disabled={answers[currentQuestion] === ""}>
           {currentQuestion < parseInt(config.questionCount) - 1
             ? "Next Question"
             : "Finish Quiz"}
